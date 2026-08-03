@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="XTSchedule.App/XTSchedule.App.csproj" />
+  <Project Path="XTSchedule.Core/XTSchedule.Core.csproj" />
+  <Project Path="XTSchedule.Export/XTSchedule.Export.csproj" />
+  <Project Path="XTSchedule.UI/XTSchedule.UI.csproj" />
+</Solution>
