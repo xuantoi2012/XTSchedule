@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XTSchedule.Core\XTSchedule.Core.csproj" />
+    <ProjectReference Include="..\XTSchedule.Export\XTSchedule.Export.csproj" />
     <ProjectReference Include="..\..\XTCADStyle\XTCADStyle.csproj" />
   </ItemGroup>
 

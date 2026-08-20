@@ -37,6 +37,7 @@ public partial class App : Application
     {
         var services = new ServiceCollection();
         services.AddSingleton<IScheduleDocumentService, ScheduleDocumentService>();
+        services.AddSingleton<IAppSettingsService, AppSettingsService>();
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<MainWindow>();
         return services.BuildServiceProvider();

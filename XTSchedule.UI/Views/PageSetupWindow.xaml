@@ -1,0 +1,69 @@
+<xt:XTCadWindow x:Class="XTSchedule.UI.Views.PageSetupWindow"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:xt="http://schemas.xtstyle.com/cad/wpf"
+                Title="Thiết lập trang" Width="380" Height="480"
+                WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+                Background="{DynamicResource CadWorkspaceBackground}">
+    <xt:XTCadWindow.Resources>
+        <Style x:Key="FieldLabel" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource CadTextSecondary}"/>
+            <Setter Property="Margin" Value="0,8,0,3"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Height" Value="28"/>
+        </Style>
+    </xt:XTCadWindow.Resources>
+    <DockPanel Margin="16">
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
+            <xt:XTButton Text="Hủy" Width="84" Margin="0,0,8,0" Click="Cancel_Click"/>
+            <xt:XTButton Text="Đồng ý" Width="84" Style="{StaticResource XTPrimaryButton}" Click="Ok_Click"/>
+        </StackPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Khổ giấy" Style="{StaticResource FieldLabel}"/>
+                <ComboBox x:Name="cmbPaperSize" Height="28">
+                    <ComboBoxItem Content="A4"/>
+                    <ComboBoxItem Content="A3"/>
+                    <ComboBoxItem Content="A2"/>
+                    <ComboBoxItem Content="A1"/>
+                </ComboBox>
+
+                <TextBlock Text="Hướng giấy" Style="{StaticResource FieldLabel}"/>
+                <ComboBox x:Name="cmbOrientation" Height="28">
+                    <ComboBoxItem Content="Dọc"/>
+                    <ComboBoxItem Content="Ngang"/>
+                </ComboBox>
+
+                <TextBlock Text="Lề (mm) — Trái / Phải / Trên / Dưới" Style="{StaticResource FieldLabel}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/><ColumnDefinition Width="6"/>
+                        <ColumnDefinition/><ColumnDefinition Width="6"/>
+                        <ColumnDefinition/><ColumnDefinition Width="6"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="txtMarginLeft" Grid.Column="0"/>
+                    <TextBox x:Name="txtMarginRight" Grid.Column="2"/>
+                    <TextBox x:Name="txtMarginTop" Grid.Column="4"/>
+                    <TextBox x:Name="txtMarginBottom" Grid.Column="6"/>
+                </Grid>
+
+                <TextBlock Text="Độ rộng cột tên công việc (mm)" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtTaskColumnWidth"/>
+
+                <TextBlock Text="Cỡ chữ" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtFontSize"/>
+
+                <TextBlock Text="Chiều cao dòng (mm)" Style="{StaticResource FieldLabel}"/>
+                <TextBox x:Name="txtRowHeight"/>
+
+                <CheckBox x:Name="chkFitToWidth" Content="Vừa chiều rộng trang" Margin="0,14,0,6"/>
+                <CheckBox x:Name="chkRepeatTaskColumns" Content="Lặp lại cột công việc mỗi trang" Margin="0,0,0,6"/>
+                <CheckBox x:Name="chkRepeatTimelineHeader" Content="Lặp lại header timeline mỗi trang" Margin="0,0,0,6"/>
+                <CheckBox x:Name="chkShowWeekend" Content="Tô màu cuối tuần"/>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</xt:XTCadWindow>

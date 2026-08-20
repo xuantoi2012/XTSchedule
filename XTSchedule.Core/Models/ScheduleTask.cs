@@ -16,6 +16,7 @@ public sealed class ScheduleTask : INotifyPropertyChanged
     private DateTime? _startDate;
     private DateTime? _finishDate;
     private double _progress;
+    private string _predecessors = string.Empty;
     private string _note = string.Empty;
     private string _barStyleId = "Default";
     private bool _isCollapsed;
@@ -131,6 +132,19 @@ public sealed class ScheduleTask : INotifyPropertyChanged
     {
         get => _progress;
         set => SetField(ref _progress, value);
+    }
+
+    /// <summary>STT (Number) của (các) công việc phải xong trước — nhập tay,
+    /// cách nhau bằng dấu phẩy (vd "1.1,1.2"), kiểu MS Project. Đối chiếu theo
+    /// Number tại thời điểm tính (MainWindowViewModel.ApplyDependencyCascade),
+    /// không lưu ID nội bộ — đơn giản/đủ dùng cho lịch nhanh, không phải CPM đầy
+    /// đủ. Đánh đổi: nếu sắp xếp/xóa/thêm dòng làm đổi Number của công việc
+    /// trước, liên kết cũ trỏ theo STT cũ sẽ không còn khớp, phải gõ lại. STT
+    /// không tồn tại thì bị bỏ qua lặng lẽ.</summary>
+    public string Predecessors
+    {
+        get => _predecessors;
+        set => SetField(ref _predecessors, value);
     }
 
     public string Note

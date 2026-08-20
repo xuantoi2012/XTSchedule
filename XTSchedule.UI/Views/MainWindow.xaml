@@ -5,6 +5,7 @@
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                 xmlns:xt="http://schemas.xtstyle.com/cad/wpf"
                 xmlns:controls="clr-namespace:XTSchedule.UI.Controls"
+                xmlns:conv="clr-namespace:XTSchedule.UI.Converters"
                 mc:Ignorable="d"
                 Title="{Binding WindowTitle}"
                 Width="1280"
@@ -12,7 +13,19 @@
                 MinWidth="960"
                 MinHeight="560"
                 Background="{DynamicResource CadWorkspaceBackground}">
+    <xt:XTCadWindow.InputBindings>
+        <KeyBinding Modifiers="Control" Key="N" Command="{Binding NewCommand}"/>
+        <KeyBinding Modifiers="Control" Key="O" Command="{Binding OpenCommand}"/>
+        <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}"/>
+        <KeyBinding Modifiers="Control+Shift" Key="S" Command="{Binding SaveAsCommand}"/>
+        <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}"/>
+        <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}"/>
+        <KeyBinding Modifiers="Control" Key="D" Command="{Binding DuplicateCommand}"/>
+    </xt:XTCadWindow.InputBindings>
+
     <xt:XTCadWindow.Resources>
+        <conv:TaskTypeToVisibilityConverter x:Key="TaskTypeToVisibilityConverter"/>
+        <conv:CollapseAngleConverter x:Key="CollapseAngleConverter"/>
         <Style x:Key="ScheduleToolButton" TargetType="{x:Type xt:XTButton}" BasedOn="{StaticResource XTToolButton}">
             <Setter Property="MinWidth" Value="76"/>
             <Setter Property="Height" Value="30"/>
@@ -46,23 +59,17 @@
                 BorderThickness="0,0,0,1"
                 Padding="8,8,8,2">
             <WrapPanel>
-                <xt:XTButton Text="Mới" Style="{StaticResource SchedulePrimaryButton}" Command="{Binding NewCommand}"/>
-                <xt:XTButton Text="Mở" Style="{StaticResource ScheduleToolButton}" Command="{Binding OpenCommand}"/>
-                <xt:XTButton Text="Lưu" Style="{StaticResource ScheduleToolButton}" Command="{Binding SaveCommand}"/>
-                <xt:XTButton Text="Thêm nhóm" Style="{StaticResource ScheduleToolButton}" MinWidth="104" Command="{Binding AddGroupCommand}"/>
-                <xt:XTButton Text="Thêm việc" Style="{StaticResource ScheduleToolButton}" MinWidth="96" Command="{Binding AddTaskCommand}"/>
-                <xt:XTButton Text="Xóa" Style="{StaticResource ScheduleDangerButton}" Command="{Binding DeleteCommand}"/>
-                <xt:XTButton Text="Lên" Style="{StaticResource ScheduleToolButton}" MinWidth="64" Command="{Binding MoveUpCommand}"/>
-                <xt:XTButton Text="Xuống" Style="{StaticResource ScheduleToolButton}" Command="{Binding MoveDownCommand}"/>
-                <xt:XTButton Text="Indent" Style="{StaticResource ScheduleToolButton}" Command="{Binding IndentCommand}"/>
-                <xt:XTButton Text="Outdent" Style="{StaticResource ScheduleToolButton}" MinWidth="84" Command="{Binding OutdentCommand}"/>
-                <xt:XTButton Text="Paste" Style="{StaticResource ScheduleToolButton}" Command="{Binding PasteRowsCommand}"/>
-                <xt:XTButton Text="-1 ngày" Style="{StaticResource ScheduleToolButton}" MinWidth="82" Command="{Binding ShiftBackCommand}"/>
-                <xt:XTButton Text="+1 ngày" Style="{StaticResource ScheduleToolButton}" MinWidth="82" Command="{Binding ShiftForwardCommand}"/>
-                <xt:XTButton Text="Nối tiếp" Style="{StaticResource ScheduleToolButton}" MinWidth="86" Command="{Binding SequenceCommand}"/>
-                <xt:XTButton Text="Xem trước" Style="{StaticResource ScheduleToolButton}" MinWidth="96"/>
-                <xt:XTButton Text="Xuất PDF" Style="{StaticResource ScheduleSuccessButton}"/>
-                <xt:XTButton Text="Xuất Word" Style="{StaticResource ScheduleToolButton}" MinWidth="96"/>
+                <xt:XTButton Text="Mới" Icon="{DynamicResource Mat.Plus}" Style="{StaticResource SchedulePrimaryButton}" Command="{Binding NewCommand}"/>
+                <xt:XTButton Text="Mở" Icon="{DynamicResource Mat.FolderOpen}" Style="{StaticResource ScheduleToolButton}" Command="{Binding OpenCommand}"/>
+                <xt:XTButton x:Name="btnRecent" Text="Gần đây" Icon="{DynamicResource Mat.History}" Style="{StaticResource ScheduleToolButton}" Click="RecentFiles_Click"/>
+                <xt:XTButton Text="Lưu" Icon="{DynamicResource Mat.ContentSave}" Style="{StaticResource ScheduleToolButton}" Command="{Binding SaveCommand}"/>
+                <xt:XTButton Text="Lưu thành" Icon="{DynamicResource Mat.ContentSaveEdit}" Style="{StaticResource ScheduleToolButton}" MinWidth="88" Command="{Binding SaveAsCommand}"/>
+                <xt:XTButton Text="Lưu mẫu" Icon="{DynamicResource Mat.FolderPlus}" Style="{StaticResource ScheduleToolButton}" MinWidth="80" Command="{Binding SaveAsTemplateCommand}"/>
+                <xt:XTButton x:Name="btnTemplates" Text="Mẫu" Icon="{DynamicResource Mat.Folder}" Style="{StaticResource ScheduleToolButton}" MinWidth="64" Click="Templates_Click"/>
+                <xt:XTButton x:Name="btnEditMenu" Text="Sửa" Icon="{DynamicResource Mat.ChevronDown}" Style="{StaticResource ScheduleToolButton}" MinWidth="72" Click="EditMenu_Click"/>
+                <xt:XTButton x:Name="btnTaskMenu" Text="Công việc" Icon="{DynamicResource Mat.ChevronDown}" Style="{StaticResource ScheduleToolButton}" MinWidth="112" Click="TaskMenu_Click"/>
+                <xt:XTButton x:Name="btnViewMenu" Text="Xem" Icon="{DynamicResource Mat.ChevronDown}" Style="{StaticResource ScheduleToolButton}" MinWidth="72" Click="ViewMenu_Click"/>
+                <xt:XTButton x:Name="btnExportMenu" Text="Xuất" Icon="{DynamicResource Mat.ChevronDown}" Style="{StaticResource ScheduleSuccessButton}" MinWidth="72" Click="ExportMenu_Click"/>
             </WrapPanel>
         </Border>
 
@@ -71,8 +78,27 @@
                 BorderBrush="{DynamicResource CadBorder}"
                 BorderThickness="0,1,0,0"
                 Padding="10,6">
-            <TextBlock Foreground="{DynamicResource CadTextSecondary}"
-                       Text="{Binding Tasks.Count, StringFormat={}{0} công việc}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Foreground="{DynamicResource CadTextSecondary}"
+                           Text="{Binding Tasks.Count, StringFormat={}{0} công việc}"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" ToolTip="Mức zoom timeline — Ctrl+lăn chuột để đổi">
+                    <xt:XTButton Text="−" Width="26" Height="22" Padding="0" FontWeight="Bold"
+                                 Style="{StaticResource ScheduleToolButton}" Margin="0,0,4,0"
+                                 Command="{Binding ZoomOutCommand}"/>
+                    <Slider Width="110" Minimum="0" Maximum="100" VerticalAlignment="Center"
+                            Value="{Binding ZoomSliderValue, Mode=TwoWay}"/>
+                    <xt:XTButton Text="+" Width="26" Height="22" Padding="0" FontWeight="Bold"
+                                 Style="{StaticResource ScheduleToolButton}" Margin="4,0,8,0"
+                                 Command="{Binding ZoomInCommand}"/>
+                    <TextBlock Foreground="{DynamicResource CadTextSecondary}"
+                               Text="{Binding ZoomPercentText}" MinWidth="44" TextAlignment="Right"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <Grid Margin="10">
@@ -82,18 +108,52 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <xt:XTDataGrid Grid.Column="0"
-                           ItemsSource="{Binding Tasks}"
+            <xt:XTDataGrid x:Name="taskGrid" Grid.Column="0"
+                           ItemsSource="{Binding TasksView}"
                            SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
                            AutoGenerateColumns="False"
                            CanUserAddRows="False"
                            RowHeight="32"
                            HeadersVisibility="Column"
                            SelectionMode="Extended"
-                           SelectionUnit="FullRow">
+                           SelectionUnit="FullRow"
+                           AllowDrop="True"
+                           SelectionChanged="TaskGrid_SelectionChanged"
+                           DeleteRequested="TaskGrid_DeleteRequested"
+                           BeginningEdit="TaskGrid_BeginningEdit"
+                           PreviewMouseLeftButtonDown="TaskGrid_PreviewMouseLeftButtonDown"
+                           PreviewMouseMove="TaskGrid_PreviewMouseMove"
+                           DragOver="TaskGrid_DragOver"
+                           Drop="TaskGrid_Drop"
+                           PreviewMouseRightButtonDown="TaskGrid_PreviewMouseRightButtonDown">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="STT" Binding="{Binding Number}" Width="70"/>
-                    <DataGridTextColumn Header="Nội dung công việc" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
+                    <DataGridTemplateColumn Header="Nội dung công việc" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="16" Height="16" Padding="0" Margin="0,0,4,0"
+                                            Background="Transparent" BorderThickness="0" Cursor="Hand"
+                                            Visibility="{Binding TaskType, Converter={StaticResource TaskTypeToVisibilityConverter}}"
+                                            Command="{Binding DataContext.ToggleCollapseCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}">
+                                        <Path Data="{DynamicResource Mat.ChevronDown}" Fill="{DynamicResource CadTextSecondary}"
+                                              Width="11" Height="11" Stretch="Uniform" RenderTransformOrigin="0.5,0.5">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="{Binding IsCollapsed, Converter={StaticResource CollapseAngleConverter}}"/>
+                                            </Path.RenderTransform>
+                                        </Path>
+                                    </Button>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Bắt đầu" Width="132">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -133,6 +193,15 @@
                     <DataGridTextColumn Header="Số ngày"
                                         Binding="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         Width="86"/>
+                    <DataGridTextColumn Header="Tiến độ (%)"
+                                        Binding="{Binding Progress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="92"/>
+                    <DataGridTextColumn Header="Việc trước"
+                                        Binding="{Binding Predecessors, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="90"/>
+                    <DataGridTextColumn Header="Ghi chú"
+                                        Binding="{Binding Note, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="140"/>
                 </DataGrid.Columns>
             </xt:XTDataGrid>
 
@@ -140,13 +209,14 @@
                           HorizontalAlignment="Stretch"
                           Background="{DynamicResource CadBorder}"/>
 
-            <ScrollViewer Grid.Column="2"
+            <ScrollViewer x:Name="timelineScroll" Grid.Column="2"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
+                          ScrollChanged="TimelineScroll_ScrollChanged"
+                          PreviewMouseWheel="TimelineScroll_PreviewMouseWheel"
                           Background="{DynamicResource CadPanelBackground}">
-                <controls:ScheduleTimelineControl ItemsSource="{Binding Tasks}"
-                                                  MinWidth="720"
-                                                  MinHeight="520"/>
+                <controls:ScheduleTimelineControl x:Name="timelineControl" ItemsSource="{Binding TasksView}"
+                                                  PixelsPerDay="{Binding PixelsPerDay}"/>
             </ScrollViewer>
         </Grid>
     </DockPanel>
