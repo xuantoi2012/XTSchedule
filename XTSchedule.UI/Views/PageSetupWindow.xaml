@@ -1,11 +1,11 @@
-<xt:XTCadWindow x:Class="XTSchedule.UI.Views.PageSetupWindow"
+<xt:XTWindow x:Class="XTSchedule.UI.Views.PageSetupWindow"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:xt="http://schemas.xtstyle.com/cad/wpf"
                 Title="Thiết lập trang" Width="380" Height="480"
                 WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
                 Background="{DynamicResource CadWorkspaceBackground}">
-    <xt:XTCadWindow.Resources>
+    <xt:XTWindow.Resources>
         <Style x:Key="FieldLabel" TargetType="TextBlock">
             <Setter Property="Foreground" Value="{DynamicResource CadTextSecondary}"/>
             <Setter Property="Margin" Value="0,8,0,3"/>
@@ -13,7 +13,7 @@
         <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Height" Value="28"/>
         </Style>
-    </xt:XTCadWindow.Resources>
+    </xt:XTWindow.Resources>
     <DockPanel Margin="16">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,14,0,0">
             <xt:XTButton Text="Hủy" Width="84" Margin="0,0,8,0" Click="Cancel_Click"/>
@@ -66,4 +66,4 @@
             </StackPanel>
         </ScrollViewer>
     </DockPanel>
-</xt:XTCadWindow>
+</xt:XTWindow>

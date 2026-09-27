@@ -1,4 +1,4 @@
-<xt:XTCadWindow x:Class="XTSchedule.UI.Views.MainWindow"
+<xt:XTWindow x:Class="XTSchedule.UI.Views.MainWindow"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +13,7 @@
                 MinWidth="960"
                 MinHeight="560"
                 Background="{DynamicResource CadWorkspaceBackground}">
-    <xt:XTCadWindow.InputBindings>
+    <xt:XTWindow.InputBindings>
         <KeyBinding Modifiers="Control" Key="N" Command="{Binding NewCommand}"/>
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding OpenCommand}"/>
         <KeyBinding Modifiers="Control" Key="S" Command="{Binding SaveCommand}"/>
@@ -21,9 +21,9 @@
         <KeyBinding Modifiers="Control" Key="Z" Command="{Binding UndoCommand}"/>
         <KeyBinding Modifiers="Control" Key="Y" Command="{Binding RedoCommand}"/>
         <KeyBinding Modifiers="Control" Key="D" Command="{Binding DuplicateCommand}"/>
-    </xt:XTCadWindow.InputBindings>
+    </xt:XTWindow.InputBindings>
 
-    <xt:XTCadWindow.Resources>
+    <xt:XTWindow.Resources>
         <conv:TaskTypeToVisibilityConverter x:Key="TaskTypeToVisibilityConverter"/>
         <conv:CollapseAngleConverter x:Key="CollapseAngleConverter"/>
         <Style x:Key="ScheduleToolButton" TargetType="{x:Type xt:XTButton}" BasedOn="{StaticResource XTToolButton}">
@@ -50,7 +50,7 @@
             <Setter Property="Padding" Value="10,0"/>
             <Setter Property="Margin" Value="0,0,14,6"/>
         </Style>
-    </xt:XTCadWindow.Resources>
+    </xt:XTWindow.Resources>
 
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top"
@@ -220,4 +220,4 @@
             </ScrollViewer>
         </Grid>
     </DockPanel>
-</xt:XTCadWindow>
+</xt:XTWindow>
