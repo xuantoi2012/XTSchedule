@@ -14,7 +14,7 @@ using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Win32;
-using XTCADStyle.Themes;
+using XTStyle.Themes;
 using XTSchedule.Core.Enums;
 using XTSchedule.Core.Interfaces;
 using XTSchedule.Core.Models;

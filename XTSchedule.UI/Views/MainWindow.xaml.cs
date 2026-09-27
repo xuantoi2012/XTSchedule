@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using XTCADStyle.Controls;
+using XTStyle.Controls;
 using XTSchedule.Core.Enums;
 using XTSchedule.Core.Models;
 using XTSchedule.UI.ViewModels;
