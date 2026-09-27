@@ -291,7 +291,7 @@ public partial class MainWindow
                 Width = 13,
                 Height = 13,
                 Stretch = Stretch.Uniform,
-                Fill = (Brush)Application.Current.FindResource("CadTextSecondary")
+                Fill = (Brush)Application.Current.FindResource("XTTextSecondary")
             };
         }
 

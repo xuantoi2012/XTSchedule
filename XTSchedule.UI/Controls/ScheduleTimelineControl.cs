@@ -208,11 +208,11 @@ public sealed class ScheduleTimelineControl : FrameworkElement
         base.OnRender(drawingContext);
 
         var (tasks, start, totalDays) = GetLayoutContext();
-        var background = TryFindResource("CadPanelBackground") as Brush ?? Brushes.White;
-        var border = TryFindResource("CadBorder") as Brush ?? Brushes.LightGray;
-        var text = TryFindResource("CadTextSecondary") as Brush ?? Brushes.DimGray;
-        var bar = TryFindResource("CadSelectionBlue") as Brush ?? Brushes.SteelBlue;
-        var groupBar = TryFindResource("CadDraftCyan") as Brush ?? Brushes.Teal;
+        var background = TryFindResource("XTPanelBackground") as Brush ?? Brushes.White;
+        var border = TryFindResource("XTBorder") as Brush ?? Brushes.LightGray;
+        var text = TryFindResource("XTTextSecondary") as Brush ?? Brushes.DimGray;
+        var bar = TryFindResource("XTSelectionBlue") as Brush ?? Brushes.SteelBlue;
+        var groupBar = TryFindResource("XTDraftCyan") as Brush ?? Brushes.Teal;
 
         drawingContext.DrawRectangle(background, null, new Rect(0, 0, ActualWidth, ActualHeight));
         drawingContext.DrawRectangle(
@@ -319,7 +319,7 @@ public sealed class ScheduleTimelineControl : FrameworkElement
         Brush bar, Brush groupBar, Brush border, Typeface typeface, double dpi, Brush text)
     {
         var progressBrush = new SolidColorBrush(Color.FromArgb(110, 0, 0, 0));
-        var linkBrush = TryFindResource("CadSelectionBlue") as Brush ?? Brushes.SteelBlue;
+        var linkBrush = TryFindResource("XTSelectionBlue") as Brush ?? Brushes.SteelBlue;
         var linkIcon = TryFindResource("Mat.Link") as Geometry;
 
         for (var i = 0; i < tasks.Count; i++)

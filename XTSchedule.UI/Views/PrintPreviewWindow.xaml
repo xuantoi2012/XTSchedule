@@ -4,13 +4,13 @@
                 xmlns:xt="http://schemas.xtstyle.com/cad/wpf"
                 Title="Xem trước khi in" Width="900" Height="720"
                 WindowStartupLocation="CenterOwner"
-                Background="{DynamicResource CadWorkspaceBackground}">
+                Background="{DynamicResource XTWorkspaceBackground}">
     <DockPanel>
-        <Border DockPanel.Dock="Top" Padding="12,8" Background="{DynamicResource CadToolbarBackground}"
-                BorderBrush="{DynamicResource CadBorder}" BorderThickness="0,0,0,1">
+        <Border DockPanel.Dock="Top" Padding="12,8" Background="{DynamicResource XTToolbarBackground}"
+                BorderBrush="{DynamicResource XTBorder}" BorderThickness="0,0,0,1">
             <StackPanel Orientation="Horizontal">
                 <TextBlock x:Name="txtPageCount" VerticalAlignment="Center" Margin="0,0,16,0"
-                           Foreground="{DynamicResource CadTextSecondary}"/>
+                           Foreground="{DynamicResource XTTextSecondary}"/>
                 <xt:XTButton Text="In..." Width="90" Style="{StaticResource XTPrimaryButton}" Click="Print_Click"/>
                 <xt:XTButton Text="Đóng" Width="80" Margin="8,0,0,0" Click="Close_Click"/>
             </StackPanel>

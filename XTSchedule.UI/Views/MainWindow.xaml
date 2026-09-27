@@ -12,7 +12,7 @@
                 Height="760"
                 MinWidth="960"
                 MinHeight="560"
-                Background="{DynamicResource CadWorkspaceBackground}">
+                Background="{DynamicResource XTWorkspaceBackground}">
     <xt:XTWindow.InputBindings>
         <KeyBinding Modifiers="Control" Key="N" Command="{Binding NewCommand}"/>
         <KeyBinding Modifiers="Control" Key="O" Command="{Binding OpenCommand}"/>
@@ -54,8 +54,8 @@
 
     <DockPanel LastChildFill="True">
         <Border DockPanel.Dock="Top"
-                Background="{DynamicResource CadToolbarBackground}"
-                BorderBrush="{DynamicResource CadBorder}"
+                Background="{DynamicResource XTToolbarBackground}"
+                BorderBrush="{DynamicResource XTBorder}"
                 BorderThickness="0,0,0,1"
                 Padding="8,8,8,2">
             <WrapPanel>
@@ -74,8 +74,8 @@
         </Border>
 
         <Border DockPanel.Dock="Bottom"
-                Background="{DynamicResource CadToolbarBackground}"
-                BorderBrush="{DynamicResource CadBorder}"
+                Background="{DynamicResource XTToolbarBackground}"
+                BorderBrush="{DynamicResource XTBorder}"
                 BorderThickness="0,1,0,0"
                 Padding="10,6">
             <Grid>
@@ -83,7 +83,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Foreground="{DynamicResource CadTextSecondary}"
+                <TextBlock Foreground="{DynamicResource XTTextSecondary}"
                            Text="{Binding Tasks.Count, StringFormat={}{0} công việc}"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" ToolTip="Mức zoom timeline — Ctrl+lăn chuột để đổi">
                     <xt:XTButton Text="−" Width="26" Height="22" Padding="0" FontWeight="Bold"
@@ -94,7 +94,7 @@
                     <xt:XTButton Text="+" Width="26" Height="22" Padding="0" FontWeight="Bold"
                                  Style="{StaticResource ScheduleToolButton}" Margin="4,0,8,0"
                                  Command="{Binding ZoomInCommand}"/>
-                    <TextBlock Foreground="{DynamicResource CadTextSecondary}"
+                    <TextBlock Foreground="{DynamicResource XTTextSecondary}"
                                Text="{Binding ZoomPercentText}" MinWidth="44" TextAlignment="Right"
                                VerticalAlignment="Center"/>
                 </StackPanel>
@@ -137,7 +137,7 @@
                                             Visibility="{Binding TaskType, Converter={StaticResource TaskTypeToVisibilityConverter}}"
                                             Command="{Binding DataContext.ToggleCollapseCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                             CommandParameter="{Binding}">
-                                        <Path Data="{DynamicResource Mat.ChevronDown}" Fill="{DynamicResource CadTextSecondary}"
+                                        <Path Data="{DynamicResource Mat.ChevronDown}" Fill="{DynamicResource XTTextSecondary}"
                                               Width="11" Height="11" Stretch="Uniform" RenderTransformOrigin="0.5,0.5">
                                             <Path.RenderTransform>
                                                 <RotateTransform Angle="{Binding IsCollapsed, Converter={StaticResource CollapseAngleConverter}}"/>
@@ -207,14 +207,14 @@
 
             <GridSplitter Grid.Column="1"
                           HorizontalAlignment="Stretch"
-                          Background="{DynamicResource CadBorder}"/>
+                          Background="{DynamicResource XTBorder}"/>
 
             <ScrollViewer x:Name="timelineScroll" Grid.Column="2"
                           HorizontalScrollBarVisibility="Auto"
                           VerticalScrollBarVisibility="Auto"
                           ScrollChanged="TimelineScroll_ScrollChanged"
                           PreviewMouseWheel="TimelineScroll_PreviewMouseWheel"
-                          Background="{DynamicResource CadPanelBackground}">
+                          Background="{DynamicResource XTPanelBackground}">
                 <controls:ScheduleTimelineControl x:Name="timelineControl" ItemsSource="{Binding TasksView}"
                                                   PixelsPerDay="{Binding PixelsPerDay}"/>
             </ScrollViewer>

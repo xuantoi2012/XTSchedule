@@ -4,10 +4,10 @@
                 xmlns:xt="http://schemas.xtstyle.com/cad/wpf"
                 Title="Thiết lập trang" Width="380" Height="480"
                 WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-                Background="{DynamicResource CadWorkspaceBackground}">
+                Background="{DynamicResource XTWorkspaceBackground}">
     <xt:XTWindow.Resources>
         <Style x:Key="FieldLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{DynamicResource CadTextSecondary}"/>
+            <Setter Property="Foreground" Value="{DynamicResource XTTextSecondary}"/>
             <Setter Property="Margin" Value="0,8,0,3"/>
         </Style>
         <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
